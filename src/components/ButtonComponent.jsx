@@ -27,7 +27,7 @@ export const ButtonComponent = (props) => {
     if(props.primary) stylesButton.push(styles.primary)
     if(props.secondary) stylesButton.push(styles.secondary)
     return(
-        <TouchableHighlight>
+        <TouchableHighlight onPress={props.onClick}>
             <Text style={stylesButton}>{props.action}</Text>
         </TouchableHighlight>
 

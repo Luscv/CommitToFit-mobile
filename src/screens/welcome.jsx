@@ -1,9 +1,16 @@
-import { StyleSheet, Text, View, Image, Dimensions } from 'react-native';
-import { ButtonComponent } from '../components/ButtonComponent';
-import imagePath from '../utils/constant/imagePath';
+import { StyleSheet, Text, View, Image, Dimensions } from 'react-native'
+import { ButtonComponent } from '../components/ButtonComponent'
+import imagePath from '../utils/constant/imagePath'
+import { useNavigation } from '@react-navigation/native'
 
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
+    },
     title:{
         fontSize: 40,
         color: '#564269',
@@ -22,8 +29,18 @@ const styles = StyleSheet.create({
 })
 
 export const Welcome = () => {
+    const navigation = useNavigation()
+
+    const handleLogin = () => {
+        navigation.navigate('Login')
+    }
+
+    const handleRegistration = () => {
+        navigation.navigate('Register')
+    }
+
     return (
-        <>
+        <View style={styles.container}>
             <Text style={styles.title}>
                 Bem vindo!
             </Text>
@@ -32,9 +49,9 @@ export const Welcome = () => {
                 source={imagePath.logoImage}
             />
             <View style={styles.buttons}>
-                <ButtonComponent action='Login' primary/>
-                <ButtonComponent action='Register' secondary/>
+                <ButtonComponent action='Login' primary onClick={handleLogin}/>
+                <ButtonComponent action='Register' secondary onClick={handleRegistration}/>
             </View>
-        </> 
+        </View> 
     )
 }
