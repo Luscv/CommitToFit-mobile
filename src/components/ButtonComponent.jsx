@@ -1,35 +1,80 @@
-import { StyleSheet, TouchableHighlight, Text, Dimensions } from "react-native"
+import { useRef } from "react"
+import { StyleSheet, TouchableHighlight, Text, Dimensions, Animated } from "react-native"
 
 const styles = StyleSheet.create({
-    button: {
-        fontSize: 20,
-        padding: 10, 
-        textAlign: 'center',
+    container:{
         overflow: 'hidden',
+        alignSelf: 'center',
+        
+    },
+    buttonContainer: {
+        padding: 10,
         borderWidth: 2,
-        borderRadius: '8%',
-        width: Dimensions.get('window').width / 2.5 ,
-        fontWeight: 'bold'
+        width: Dimensions.get('window').width / 2.5 , 
+        borderRadius: 8,
+        borderColor: '#564269'  
     },
-    primary: {
+    buttonText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+    primaryContainer: {
         backgroundColor: '#564269',
-        color: '#fafafa',
-        borderColor: '#564269',
+        
     },
-    secondary: {
-        borderColor: '#564269',
+    primaryText: {
+        color: '#fafafa',
+    },
+    secondaryContainer: {
+        backgroundColor: 'transparent'
+    },
+    secondaryText: {
         color: '#564269'
     }
 })
 
 export const ButtonComponent = (props) => {
-    const stylesButton = [styles.button]
-    if(props.primary) stylesButton.push(styles.primary)
-    if(props.secondary) stylesButton.push(styles.secondary)
-    return(
-        <TouchableHighlight onPress={props.onClick}>
-            <Text style={stylesButton}>{props.action}</Text>
-        </TouchableHighlight>
+    const scaleValue = useRef(new Animated.Value(1)).current
 
+    const animateButton = (toValue) => {
+        Animated.spring(scaleValue, {
+            toValue,
+            useNativeDriver: true, 
+        }).start()
+    }
+
+    const handlePressIn = () => animateButton(0.95)
+    const handlePressOut = () => animateButton(1)
+
+    const containerStyles = [styles.buttonContainer]
+    const textStyles = [styles.buttonText]
+
+    if(props.primary){
+        containerStyles.push(styles.primaryContainer)
+        textStyles.push(styles.primaryText)
+    }
+    if(props.secondary){
+        containerStyles.push(styles.secondaryContainer)
+        textStyles.push(styles.secondaryText)
+    }
+
+    return(
+        <TouchableHighlight 
+            onPress={props.onClick} 
+            onPressIn={handlePressIn} 
+            onPressOut={handlePressOut} 
+            underlayColor='transparent' 
+            style={styles.container}
+        >
+            <Animated.View style={[
+                containerStyles,
+                {
+                    transform: [{scale: scaleValue}]
+                }
+            ]}>
+                <Text style={textStyles}>{props.action}</Text>
+            </Animated.View>
+        </TouchableHighlight>
     )
 }
