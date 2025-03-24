@@ -1,14 +1,14 @@
 
 import { StyleSheet, Text, View, Image, Dimensions, TextInput, KeyboardAvoidingView, Platform } from "react-native"
 import imagePath from "../utils/constant/imagePath"
-import { ButtonComponent } from "../components/ButtonComponent"
+import { RegisterForm } from "../components/RegisterForm"
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
         alignItems: 'center',
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
     },
     imageStyle: {
         height: Dimensions.get('window').height/5,
@@ -26,7 +26,8 @@ const styles = StyleSheet.create({
     loginForm: {
         alignContent: 'center',
         alignItems: 'center',
-        gap: 20
+        gap: 20,
+        marginBottom: 40
     },
 })
 
@@ -41,40 +42,7 @@ export const Register = () => {
                 style={styles.imageStyle}
                 source={imagePath.logoMark}
             />
-            <View style={styles.loginForm}>
-                <View>
-                    <Text style={{alignSelf:'center', fontSize: 15, color: '#564269', paddingBottom: 15}}>Faça o seu cadastro:</Text>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="E-mail"
-                        placeholderTextColor='#1b1b1b'
-                    />
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Senha"
-                        placeholderTextColor='#1b1b1b'
-                    />
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Repita a senha"
-                        placeholderTextColor='#1b1b1b'
-                    />
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Data de nascimento"
-                        placeholderTextColor='#1b1b1b'
-                    />
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Objetivo"
-                        placeholderTextColor='#1b1b1b'
-                    />
-                </View>
-                <ButtonComponent
-                    primary
-                    action='Criar conta'
-                />
-            </View>
+            <RegisterForm/>
         </KeyboardAvoidingView>
     )
 }

@@ -45,12 +45,12 @@ export const Login = () => {
                     <Text style={{alignSelf:'center', fontSize: 15, color: '#564269', paddingBottom: 15}}>Bem-vindo de volta! Faça seu Login:</Text>
                     <TextInput
                         style={styles.input}
-                        placeholder="e-mail"
+                        placeholder="Email"
                         placeholderTextColor='#1b1b1b'
                     />
                     <TextInput
                         style={styles.input}
-                        placeholder="senha"
+                        placeholder="Senha"
                         placeholderTextColor='#1b1b1b'
                     />
                 </View>
