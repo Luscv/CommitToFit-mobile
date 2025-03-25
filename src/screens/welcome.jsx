@@ -49,8 +49,8 @@ export const Welcome = () => {
                 source={imagePath.logoImage}
             />
             <View style={styles.buttons}>
-                <ButtonComponent action='Login' primary onClick={handleLogin}/>
-                <ButtonComponent action='Register' secondary onClick={handleRegistration}/>
+                <ButtonComponent action='Login' primary onPress={handleLogin}/>
+                <ButtonComponent action='Register' secondary onPress={handleRegistration}/>
             </View>
         </View> 
     )

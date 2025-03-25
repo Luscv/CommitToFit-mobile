@@ -61,7 +61,7 @@ export const ButtonComponent = (props) => {
 
     return(
         <TouchableHighlight 
-            onPress={props.onClick} 
+            onPress={props.onPress} 
             onPressIn={handlePressIn} 
             onPressOut={handlePressOut} 
             underlayColor='transparent' 
