@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Image, Dimensions } from 'react-native'
-import { ButtonComponent } from '../components/ButtonComponent'
-import imagePath from '../utils/constant/imagePath'
+import { ButtonComponent } from '../../../shared/components/ButtonComponent'
+import imagePath from '../../../shared/utils/constant/imagePath'
 import { useNavigation } from '@react-navigation/native'
 
 

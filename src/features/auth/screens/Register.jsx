@@ -1,6 +1,6 @@
 
 import { StyleSheet, Text, View, Image, Dimensions, TextInput, KeyboardAvoidingView, Platform } from "react-native"
-import imagePath from "../utils/constant/imagePath"
+import imagePath from "../../../shared/utils/constant/imagePath"
 import { RegisterForm } from "../components/RegisterForm"
 
 const styles = StyleSheet.create({

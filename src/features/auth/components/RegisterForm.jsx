@@ -1,7 +1,8 @@
-import { View, Text, StyleSheet, Dimensions, TextInput } from "react-native"
-import { InputForm } from "./InputFormComponent"
-import { ButtonComponent } from "./ButtonComponent"
+import { View, Text, StyleSheet, Dimensions, TextInput, TouchableOpacity } from "react-native"
+import { ButtonComponent } from "../../../shared/components/ButtonComponent"
 import { useForm, Controller  } from "react-hook-form"
+import { useState } from "react"
+import  Icon  from "react-native-vector-icons/Ionicons"
 
 const styles = StyleSheet.create({
     container: {
@@ -15,6 +16,11 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         height: 75,
         width: Dimensions.get('window').width/1.5,
+    },
+    iconContainer: {
+        position: 'absolute',
+        right: 10,
+        top: 10
     },
     input: {
         height: 40,
@@ -34,6 +40,8 @@ const styles = StyleSheet.create({
 export const RegisterForm = () => {
     const {control, handleSubmit, formState: {errors}, watch} = useForm()
     const senha = watch('senha')
+    const [passwordVisible, setPasswordVisible] = useState(false)
+    const [repeatPasswordVisible, setRepeatPasswordVisible] = useState(false)
 
     const onSubmit = (data) => {
         console.log(data)
@@ -45,7 +53,7 @@ export const RegisterForm = () => {
                     <Text style={{alignSelf:'center', fontSize: 20, color: '#564269', paddingBottom: 15}}>Faça o seu cadastro:</Text>
                     
                     <View style={styles.inputContainer}>
-                        <Text style={{alignSelf: 'baseline', paddingBottom: 4, fontSize: 16, color: '#564269'}}>Digite seu email:</Text>
+                        <Text style={{alignSelf: 'baseline', paddingBottom: 4, fontSize: 16, color: '#564269'}}>Digite seu email: <Text style={{color: '#fc0000'}}>*</Text></Text>
                         <Controller
                             control={control}
                             rules={{
@@ -63,6 +71,7 @@ export const RegisterForm = () => {
                                     onBlur={onBlur}
                                     onChangeText={onChange}
                                     value={value}
+                                    inputMode="email"
                                 />
                             )}
                             name="email"
@@ -72,7 +81,7 @@ export const RegisterForm = () => {
                     </View>
                         
                     <View style={styles.inputContainer}>
-                        <Text style={{alignSelf: 'baseline', paddingBottom: 4, fontSize: 16, color: '#564269'}}>Escolha sua senha:</Text>
+                        <Text style={{alignSelf: 'baseline', paddingBottom: 4, fontSize: 16, color: '#564269'}}>Escolha sua senha: <Text style={{color: '#fc0000'}}>*</Text></Text>
                         <Controller
                             control={control}
                             rules={{
@@ -83,14 +92,25 @@ export const RegisterForm = () => {
                                 }
                             }}
                             render={({field: {onChange, onBlur, value}}) => (
-                                <TextInput
-                                    style={styles.input}
-                                    placeholder='Senha'
-                                    placeholderTextColor='#8c8c8c'
-                                    onBlur={onBlur}
-                                    onChangeText={onChange}
-                                    value={value}
-                                />
+                                <View style={{position: 'relative'}}>
+                                    <TextInput
+                                        secureTextEntry={!passwordVisible}
+                                        style={styles.input}
+                                        placeholder='Senha'
+                                        placeholderTextColor='#8c8c8c'
+                                        onBlur={onBlur}
+                                        onChangeText={onChange}
+                                        value={value}
+                                    />
+                                    <TouchableOpacity style={styles.iconContainer}>
+                                        <Icon
+                                            name={passwordVisible ? 'eye-off' : 'eye'}
+                                            size={20}
+                                            color='#564269'
+                                            onPress={() => setPasswordVisible(!passwordVisible)}
+                                        />
+                                    </TouchableOpacity>
+                                </View>
                             )}
                             name="senha"
                         
@@ -107,14 +127,26 @@ export const RegisterForm = () => {
                                 validate: (value) => value === senha || 'Senhas não coincidem'
                             }}
                             render={({field: {onChange, onBlur, value}}) => (
-                                <TextInput
-                                    style={styles.input}
-                                    placeholder='Repita a senha'
-                                    placeholderTextColor='#8c8c8c'
-                                    onBlur={onBlur}
-                                    onChangeText={onChange}
-                                    value={value}
-                                />
+                                <View style={{position: 'relative'}}>
+                                    <TextInput
+                                        secureTextEntry={!repeatPasswordVisible}
+                                        readOnly={!senha}
+                                        style={styles.input}
+                                        placeholder='Repita a senha'
+                                        placeholderTextColor='#8c8c8c'
+                                        onBlur={onBlur}
+                                        onChangeText={onChange}
+                                        value={!!senha ? value : ''}
+                                    />
+                                    <TouchableOpacity style={styles.iconContainer}>
+                                        <Icon
+                                            name={repeatPasswordVisible ? 'eye-off' : 'eye'}
+                                            size={20}
+                                            color='#564269'
+                                            onPress={() => setRepeatPasswordVisible(!repeatPasswordVisible)}
+                                        />
+                                    </TouchableOpacity>
+                                </View>
                             )}
                             name="confirmarSenha"
                         
@@ -123,7 +155,7 @@ export const RegisterForm = () => {
                     </View>
 
                     <View style={styles.inputContainer}>
-                        <Text style={{alignSelf: 'baseline', paddingBottom: 4, fontSize: 16, color: '#564269'}}>Data de nascimento:</Text>
+                        <Text style={{alignSelf: 'baseline', paddingBottom: 4, fontSize: 16, color: '#564269'}}>Data de nascimento: <Text style={{color: '#fc0000'}}>*</Text></Text>
                         <Controller
                             control={control}
                             rules={{
@@ -141,6 +173,8 @@ export const RegisterForm = () => {
                                     onBlur={onBlur}
                                     onChangeText={onChange}
                                     value={value}
+                                    inputMode="numeric"
+                                    textContentType="birthdate"
                                 />
                             )}
                             name="dataNascimento"

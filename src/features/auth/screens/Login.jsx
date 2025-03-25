@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Image, Dimensions, TextInput, KeyboardAvoidingView, Platform } from "react-native"
-import imagePath from "../utils/constant/imagePath"
-import { ButtonComponent } from "../components/ButtonComponent"
+import imagePath from "../../../shared/utils/constant/imagePath"
+import { ButtonComponent } from "../../../shared/components/ButtonComponent"
 
 const styles = StyleSheet.create({
     container: {
