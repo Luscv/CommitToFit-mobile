@@ -173,7 +173,6 @@ export const RegisterForm = () => {
                                     onBlur={onBlur}
                                     onChangeText={onChange}
                                     value={value}
-                                    inputMode="numeric"
                                     textContentType="birthdate"
                                 />
                             )}
