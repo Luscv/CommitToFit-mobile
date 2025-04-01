@@ -1,7 +1,7 @@
-import { axios } from "../../../services/axios.config"
+import { api } from "../../../services/axios.config"
 
 export const userAuth = async (userData) => {
-    const response = await axios.post('auth/login', userData, {
+    const response = await api.post('auth/login', userData, {
         headers: {
             'Content-Type' : 'application/json' 
         }
@@ -10,7 +10,7 @@ export const userAuth = async (userData) => {
 }
 
 export const userRegister = async (userData) => {
-    const response = await axios.post('auth/register', userData, {
+    const response = await api.post('auth/register', userData, {
         headers: {
             'Content-Type' : 'application/json' 
         }

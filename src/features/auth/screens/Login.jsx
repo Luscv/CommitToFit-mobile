@@ -1,6 +1,7 @@
-import { StyleSheet, Text, View, Image, Dimensions, TextInput, KeyboardAvoidingView, Platform } from "react-native"
+import { StyleSheet, Text, View, Image, Dimensions, TextInput, KeyboardAvoidingView, Platform, Button } from "react-native"
 import imagePath from "../../../shared/utils/constant/imagePath"
 import { ButtonComponent } from "../../../shared/components/ButtonComponent"
+import { useLogin } from "../hooks/useLogin"
 
 const styles = StyleSheet.create({
     container: {
@@ -21,7 +22,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         padding: 10,
         borderRadius: 8
-    },
+    },  
     loginForm: {
         alignContent: 'center',
         alignItems: 'center',
@@ -30,6 +31,8 @@ const styles = StyleSheet.create({
 })
 
 export const Login = () => {
+    const { loginAuth } = useLogin()
+
     return(
         <KeyboardAvoidingView
             behavior={Platform.OS === 'ios'? 'padding' : 'height'}
@@ -52,6 +55,10 @@ export const Login = () => {
                         style={styles.input}
                         placeholder="Senha"
                         placeholderTextColor='#1b1b1b'
+                    />
+                    <Button
+                        color='#551caf'
+                        title="Esqueci minha senha" 
                     />
                 </View>
                 <ButtonComponent
