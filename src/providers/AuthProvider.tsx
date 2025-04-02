@@ -1,23 +1,10 @@
-import { createContext, useContext, useState } from "react";
-import React from 'react'
-import { api } from "../services/axios.config";
-import { userAuth, userRegister } from "../features/auth/services/authService";
-import axios from "axios";
-import * as SecureStore from 'expo-secure-store';
-
-interface AuthProps {
-    authState?: { token: string | null; authenticated: boolean | null} 
-    onRegister?: (email: string, password: string) => Promise<any>
-    onLogin?: (EMAIL: string, Password: string) => Promise<any>
-    onLogout?: () => Promise<any>
-}
+import axios from "axios"
+import { useEffect, useState } from "react"
+import { userAuth, userRegister } from "../features/auth/services/authService"
+import { AuthContext } from "../features/auth/context/authContext"
+import * as SecureStore from 'expo-secure-store'
 
 const TOKEN_KEY = 'JWT-TOKEN'
-const AuthContext = createContext<AuthProps>({})
-
-export const useAuth = () => {
-    return useContext(AuthContext)
-}
 
 export const AuthProvider = ({children}: any) => {
     const [authState, setAuthState] = useState<{
@@ -27,6 +14,24 @@ export const AuthProvider = ({children}: any) => {
         token: null,
         authenticated: null
     })
+
+    useEffect(() => {
+        const loadToken = async () => {
+            const token = await SecureStore.getItemAsync(TOKEN_KEY)
+            console.log('stored:', token)
+
+            if(token) {
+                axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+
+                setAuthState({
+                    token: token,
+                    authenticated: true
+                })
+            }
+
+        }
+        loadToken()
+    }, [])
 
     const register = async (email: string, password: string) => {
         try {
@@ -38,6 +43,7 @@ export const AuthProvider = ({children}: any) => {
 
     const login = async (email: string, password: string) => {
         try {
+            console.log('login result:')
             const result = await userAuth({email, password})
             console.log('login result:', result)
 
@@ -68,7 +74,10 @@ export const AuthProvider = ({children}: any) => {
     }
 
     const value = {
-        onRegister: register
+        onRegister: register,
+        onLogin: login,
+        onLogout: logout,
+        authState
     }
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

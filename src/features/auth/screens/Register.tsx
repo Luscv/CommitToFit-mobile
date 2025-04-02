@@ -2,6 +2,10 @@
 import { StyleSheet, Text, View, Image, Dimensions, TextInput, KeyboardAvoidingView, Platform } from "react-native"
 import imagePath from "../../../shared/utils/constant/imagePath"
 import { RegisterForm } from "../components/RegisterForm"
+import { useState } from "react"
+import { useAuth } from "../context/authContext"
+import React from "react"
+import { Login } from "./Login"
 
 const styles = StyleSheet.create({
     container: {
@@ -32,6 +36,25 @@ const styles = StyleSheet.create({
 })
 
 export const Register = () => {
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const { onLogin, onRegister } = useAuth()
+
+    const login = async () => {
+        const result = await onLogin!(email, password)
+        if (result && result.error){
+            alert(result.msg)
+        }
+    }
+
+    const register = async () => {
+        const result = await onRegister!(email, password)
+        if (result && result.error){
+            alert(result.msg)
+        } else {
+            Login()
+        }
+    }
     return(
         <KeyboardAvoidingView
             behavior={Platform.OS === 'ios'? 'padding' : 'height'}

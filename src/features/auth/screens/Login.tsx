@@ -2,6 +2,9 @@ import { StyleSheet, Text, View, Image, Dimensions, TextInput, KeyboardAvoidingV
 import imagePath from "../../../shared/utils/constant/imagePath"
 import { ButtonComponent } from "../../../shared/components/ButtonComponent"
 import { useLogin } from "../hooks/useLogin"
+import { useState } from "react"
+import { useAuth } from "../context/authContext"
+import React from "react"
 
 const styles = StyleSheet.create({
     container: {
@@ -31,7 +34,17 @@ const styles = StyleSheet.create({
 })
 
 export const Login = () => {
-    const { loginAuth } = useLogin()
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const { onLogin, onRegister } = useAuth()
+
+    const login = async () => {
+        const result = await onLogin!(email, password)
+        
+        if (result && result.error){
+            alert(result.msg)
+        }
+    }
 
     return(
         <KeyboardAvoidingView
@@ -64,6 +77,7 @@ export const Login = () => {
                 <ButtonComponent
                     primary
                     action='Login'
+                    onPress={() => login()}
                 />
             </View>
         </KeyboardAvoidingView>
